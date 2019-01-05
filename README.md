@@ -21,6 +21,7 @@ De decorator zorgt ervoor dat je typescript class als component wordt gebruikt. 
 
 Voorbeeld: 
 '''
+
 <template>
 <div>
   <h1>Registratie</h1>
@@ -72,6 +73,7 @@ Vervolgens stellen we de router , welk pad naar welke component verwijst
 
 voorbeeld : 
 '''
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
