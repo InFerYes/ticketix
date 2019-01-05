@@ -20,7 +20,7 @@ Meestal word er ook gebruik gemaakt van de component decorator  die word opgehaa
 De decorator zorgt ervoor dat je typescript class als component wordt gebruikt.  Je kan deze nog enkele properties meegeven, bvb als je een andere component wilt inladen. 
 
 Voorbeeld: 
-'
+'''
 <template>
 <div>
   <h1>Registratie</h1>
@@ -63,7 +63,7 @@ export default class Registratie extends Vue {
 <style scoped>
 
 </style>
-'
+'''
 
 ## Gebruik van de router ##
 
@@ -71,7 +71,8 @@ De router import de components die nodig zijn voor de navigatie.
 Vervolgens stellen we de router , welk pad naar welke component verwijst 
 
 voorbeeld : 
-'import Vue from 'vue'
+'''
+import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
 import Registratie from './components/Registratie.vue'
@@ -100,4 +101,5 @@ export default new Router({
       component: CreateTeam
     },
   ]
-})'
+})
+'''
