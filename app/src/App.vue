@@ -1,31 +1,28 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+
+  <div class="container-fluid">
+    <div class="jumbotron">
+    <h1 class="display-4">LAN Party registratie</h1>
+    <p class="lead">Welkom! Registreer je simpelweg met een paar klikken via onze web app.</p>
+    <hr class="my-4">
+    <p>Maak ook je eigen team en nodig je vrienden uit!</p>
+     <ul class="nav nav-pills">
+        <li class="nav-item ">
+          <router-link class="nav-link active" to="/registratie">Registratie</router-link>
+        </li>
+         <li class="nav-item">
+          <router-link class="nav-link" to="/createteam">Create team</router-link>
+        </li>
+      
+     
+    </ul>
     </div>
+
+   
     <router-view/>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
