@@ -4,35 +4,51 @@
   <el-steps :active="active" finish-status="success">
   <el-step title="registratie"></el-step>
   <el-step title="reservering"></el-step>
-  <el-step title="activatie"></el-step>
+  <el-step title="bevestiging"></el-step>
 </el-steps>
-  <RegistratieForm v-if="active==0"></RegistratieForm>
-  <RegistratieReservering v-if="active==1"></RegistratieReservering>
-    <RegistratieActivatie v-if="active==2"></RegistratieActivatie>
-    <el-button style="margin-top: 12px;" @click="back">terug</el-button>
-  <el-button style="margin-top: 12px;" @click="next">volgende</el-button> 
+  <RegistratieForm :registratieLanModel="registratieModel" v-if="active==0" @stapRegistratieGegevens="reservatieGegevensCallBack"></RegistratieForm>
+  <RegistratieReservering :registratieLanModel="registratieModel" v-if="active==1" @stapReservering="reserveringCallBack"></RegistratieReservering>
+  <RegistratieActivatie :registratieLanModel="registratieModel" v-if="active==2" @stapBevestiging="BevestigingCallBack"></RegistratieActivatie>
+ 
 </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue,Provide } from 'vue-property-decorator';
 import RegistratieForm from './RegistratieForm.vue'
 import RegistratieReservering from './RegistratieReservering.vue'
 import RegistratieActivatie from './RegistratieActivatie.vue'
-
+import {registratieLan} from '../models/RegistratieLan'
+import {persoon} from '../models/Persoon'
 @Component(
   {components:{RegistratieForm,RegistratieReservering,RegistratieActivatie}}
 )
 export default class Registratie extends Vue {
- public active:number=0;
-      next() {
-        if (this.active++ > 2) this.active = 0;
-      }
-      back(){
-        if(this.active!=0){
-          this.active--
-        }
-      }
+ 
+  public registratieModel=new registratieLan();
+ 
+
+  constructor() {
+   super();
+    this.registratieModel.personen.push(new persoon());
+  }
+  public active:number=0;
+
+  reservatieGegevensCallBack(registratieLan:registratieLan){
+    this.registratieModel=registratieLan;
+    this.active++;
+  }
+  reserveringCallBack(registratieLan:registratieLan,isnextstep:boolean){
+       this.registratieModel=registratieLan;
+    if(isnextstep)this.active++; else this.active--;
+
+  }
+  BevestigingCallBack(registratieLan:registratieLan,isnextstep:boolean){
+       this.registratieModel=registratieLan;
+    if(isnextstep)this.active++; else this.active--;
+
+  }
+
 }
 </script>
 

@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-//import { SaveGebruikerData } from '../models/SaveGebruikerData';
+import {registratieLan} from  '../models/RegistratieLan'
 
 
 export class FirebaseService{
@@ -16,9 +16,9 @@ export class FirebaseService{
         firebase.initializeApp(this.config);
 
     }
-    /*saveDateGebruiker(data:SaveGebruikerData){
-        firebase.database().ref('Gebruikers/' + data.PersoonGegevens.idkaart).set(data);
-    }*/
+    saveRegistratie(registratie:registratieLan){
+        firebase.database().ref('registratie/' + registratie.code).set(registratie);
+    }
 }
 
 export const firebaseService = new FirebaseService();
