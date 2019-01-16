@@ -23,11 +23,11 @@ export default class RegistratieReservering extends Vue {
    public registratieLanModel!:registratieLan;
 
     genereerCodeOverschrijving(){
-        if(this.registratieLanModel.isAkkoord){
-            this.registratieLanModel.code+=Math.floor(Math.random()*90000) + 10000;
+        if(this.registratieLanModel.hasAgreedToPrivacyPolicy){
+            this.registratieLanModel.registerCode+=Math.floor(Math.random()*90000) + 10000;
             let datum=new Date();
             let tijdstamp=datum.getHours()+datum.getMinutes()+datum.getSeconds()+datum.getMilliseconds();
-            this.registratieLanModel.code+=tijdstamp;
+            this.registratieLanModel.registerCode+=tijdstamp;
         }
     }
     back(){

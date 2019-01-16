@@ -1,9 +1,7 @@
-import { persoon } from './Persoon';
+import { person } from './Person';
 
 export class registratieLan{
-    public personen:persoon[]=[]
-    public code:number=0;
-    public isAkkoord:boolean=false;
-    public team:string="";
-    public omschrijving:string="";
+    public requestor:person=new person;
+    public registerCode:number=0;
+    public hasAgreedToPrivacyPolicy:boolean=false;
 }

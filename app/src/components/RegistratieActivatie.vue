@@ -40,7 +40,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import {registratieLan} from '../models/RegistratieLan'
-import {firebaseService} from '../services/FirebaseService'
+import {firebaseService} from '../services/firebaseservice'
 @Component
 export default class RegistratieActivatie extends Vue {
     

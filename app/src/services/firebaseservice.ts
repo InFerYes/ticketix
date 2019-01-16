@@ -17,7 +17,7 @@ export class FirebaseService{
 
     }
     saveRegistratie(registratie:registratieLan){
-        firebase.database().ref('registratie/' + registratie.code).set(registratie);
+        firebase.database().ref('registratie/' + registratie.registerCode).set(registratie);
     }
 }
 
