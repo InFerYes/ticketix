@@ -4,8 +4,9 @@ export class person{
     public lastName:string="";
     public email:string="";
     public nickName:string="";
-    public hasAgreedPrivacyPolicy:boolean=false;
+    public hasAgreedToPrivacyPolicy:boolean=false;
     public hasPaid:boolean=false;
     public hasOrderedTicket:boolean=false;
     public ticket:ticket=new ticket;
+    public hasActivated: boolean=false;
 }

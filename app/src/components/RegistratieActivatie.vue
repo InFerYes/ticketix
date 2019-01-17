@@ -1,40 +1,23 @@
 <template>
-<div>
-    <h3>Overzicht van je gegevens</h3>
-     <div class="row">
-        <div class="col-3"><b>Team</b></div><div class="col-2">{{registratieLanModel.team}}</div>
-    </div>
-    <div class="row">
-        <div class="col-3"><b>Aantal tickets</b></div><div class="col-2">{{registratieLanModel.personen.length}}</div>
-    </div>
-    <div class="row">
-        <div class="col-3"><b>Omschrijving</b> </div><div class="col-2">{{registratieLanModel.omschrijving}}</div>
-    </div>
-     <div class="row">
-        <div class="col-3"><el-button style="margin-top: 12px;"  @click="bevestig">Ik ga akkoord met de voorwaarden en bevestig</el-button></div>
-    </div>
-    <h3>Personen</h3>
-    <div class="row">
-        <div class="col">
-            <table class="table">
-                <thead>
-                    <tr><th>Voornaam</th>
-                   <th>Familienaam</th>
-                    <th>Email</th></tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(p,index) in registratieLanModel.personen" :key="index">
-                        <td>{{p.voornaam}}</td>
-                        <td>{{p.familienaam}}</td>
-                        <td>{{p.email}}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div>
+        <h3>Summary of your data</h3>
+        <div class="row">
+            <div class="col-3">First name</div>
+            <div class="col-3">{{registratieLanModel.requestor.firstName}}</div>
         </div>
-          
-    </div> 
-    <el-button style="margin-top: 12px;"  @click="back">Vorige</el-button>  
-</div>
+        <div class="row">
+            <div class="col-3">Last name</div>
+            <div class="col-3">{{registratieLanModel.requestor.lastName}}</div>
+        </div>
+        <div class="row">
+            <div class="col-3">Email</div>
+            <div class="col-3">{{registratieLanModel.requestor.email}}</div>
+        </div>
+        <div class="row">
+            <div class="col-3"><el-button style="margin-top: 12px;"  @click="bevestig">Looks right, continue my registration!</el-button></div>
+        </div>
+        <el-button style="margin-top: 12px;"  @click="back">previous</el-button>  
+    </div>
 </template>
 
 <script lang="ts">

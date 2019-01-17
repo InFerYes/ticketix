@@ -2,9 +2,9 @@
 <div>
   <h1>Registratie</h1>
   <el-steps :active="active" finish-status="success">
-    <el-step title="registratie"></el-step>
-    <el-step title="reservering"></el-step>
-    <el-step title="bevestiging"></el-step>
+    <el-step title="registration"></el-step>
+    <el-step title="privacy policy"></el-step>
+    <el-step title="confirmation"></el-step>
   </el-steps>
   <RegistratieForm :registratieLanModel="registratieModel" v-if="active==0" @stapRegistratieGegevens="reservatieGegevensCallBack"></RegistratieForm>
   <RegistratieReservering :registratieLanModel="registratieModel" v-if="active==1" @stapReservering="reserveringCallBack"></RegistratieReservering>

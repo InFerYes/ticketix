@@ -1,15 +1,21 @@
 <template>
 <div>
-    <h3>Voer je gegevens in:</h3>
+    <h3>Please tell us who you are:</h3>
         <el-form  label-width="100px">
-        <el-form-item label="Voornaam">
+        <el-form-item label="First name">
             <el-input v-model="registratieLanModel.requestor.firstName"></el-input>
         </el-form-item>
-        <el-form-item label="Achternaam">
+        <el-form-item label="Last name">
             <el-input v-model="registratieLanModel.requestor.lastName"></el-input>
         </el-form-item>
+        <el-form-item label="Nickname">
+            <el-input v-model="registratieLanModel.requestor.nickName"></el-input>
+        </el-form-item>
+        <el-form-item label="Email">
+            <el-input v-model="registratieLanModel.requestor.email"></el-input>
+        </el-form-item>
     </el-form>
-    <el-button style="margin-top: 12px;" :disabled="zijnGegevensValid" @click="next">volgende</el-button> 
+    <el-button style="margin-top: 12px;" :disabled="!zijnGegevensValid" @click="next">next</el-button> 
 </div>
 </template>
 
@@ -30,7 +36,7 @@ export default class RegistratieForm extends Vue {
     get zijnGegevensValid(){
         let isValid:boolean=true;
 
-        if (this.registratieLanModel.requestor.firstName.length >1 && this.registratieLanModel.requestor.lastName.length >1 && this.registratieLanModel.requestor.email.length >1) {
+        if (this.registratieLanModel.requestor.firstName.length >0 && this.registratieLanModel.requestor.lastName.length >0 && this.registratieLanModel.requestor.email.length >0) {
             isValid = true;
         }
         else {
