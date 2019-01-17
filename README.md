@@ -1,7 +1,7 @@
 # ticketix
 Ticket sales and seat selector
 
-## Gebruik van technologieën ##
+## Gebruik van technologieën
 
 Ticketing maakt gebruik van volgende technologieën:
 1. Vue + Vue Cli :https://vuejs.org/
@@ -10,18 +10,19 @@ Ticketing maakt gebruik van volgende technologieën:
 4. Typescript : https://www.typescriptlang.org/
 
 
-## Gebruik van components ##
-Components worden gemaakt in .vue files. De .vue files begint meestal met deze opmaak: 
+## Gebruik van components
+
+Components worden gemaakt in .vue files. De .vue files beginnen meestal met deze opmaak: 
 1. Template tag
-2. script tag die gebruikt maakt van Typescript
+2. Script tag dat gebruikt maakt van Typescript
 3. Style tag
 
-Meestal word er ook gebruik gemaakt van de component decorator  die word opgehaald uit vue-property-decorator. 
-De decorator zorgt ervoor dat je typescript class als component wordt gebruikt.  Je kan deze nog enkele properties meegeven, bvb als je een andere component wilt inladen. 
+Meestal wordt er ook gebruik gemaakt van de component decorator die word opgehaald uit vue-property-decorator. 
+De decorator zorgt ervoor dat je typescript class als component wordt gebruikt. Je kan deze nog enkele properties meegeven, bvb als je een andere component wilt inladen. 
 
 Voorbeeld: 
-'''
 
+```
 <template>
 <div>
   <h1>Registratie</h1>
@@ -64,39 +65,39 @@ export default class Registratie extends Vue {
 <style scoped>
 
 </style>
-'''
+```
 
-## Gebruik van de router ##
+## Gebruik van de router
 
 De router import de components die nodig zijn voor de navigatie. 
-Vervolgens stellen we de router , welk pad naar welke component verwijst 
+Vervolgens stellen we de router, welk pad naar welke component verwijst 
 
-voorbeeld : 
+Voorbeeld : 
 
+```
+import Vue from 'vue' import Router from 'vue-router' import Home from
+'./components/Home.vue' import Registratie from
+'./components/Registratie.vue' import CreateTeam from
+'./components/CreateTeam.vue' Vue.use(Router)
 
-> import Vue from 'vue' import Router from 'vue-router' import Home from
-> './components/Home.vue' import Registratie from
-> './components/Registratie.vue' import CreateTeam from
-> './components/CreateTeam.vue' Vue.use(Router)
-> 
-> export default new Router({   routes: [
->     {
->       path: '/',
->       name: 'home',
->       component: Home
->     },
->     {
->       path: '/registratie',
->       name: 'registratie',
->       component:Registratie
->       // route level code-splitting
->       // this generates a separate chunk (about.[hash].js) for this route
->       // which is lazy-loaded when the route is visited.
->       //component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
->     },
->     {
->       path: '/createteam',
->       name: 'createteam',
->       component: CreateTeam
->     },   ] })
-
+export default new Router({   routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/registratie',
+      name: 'registratie',
+      component:Registratie
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      //component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+    },
+    {
+      path: '/createteam',
+      name: 'createteam',
+      component: CreateTeam
+    },   ] })
+```
