@@ -2,8 +2,8 @@
 <div>
     <p>You agree to have read our <a href="https://www.holysh1t.net/about/privacy-policy/" target="_blank">privacy policy </a>
     <el-checkbox v-model="registratieLanModel.requestor.hasAgreedToPrivacyPolicy" @change="genereerCodeOverschrijving" label="I agree" border></el-checkbox></p>
-    <el-button style="margin-top: 12px;"  @click="back">previous</el-button>
-    <el-button style="margin-top: 12px;" :disabled="!registratieLanModel.requestor.hasAgreedToPrivacyPolicy" @click="next">next</el-button> 
+    <el-button style="margin-top: 12px;" type="info"  @click="back" plain>previous</el-button>
+    <el-button style="margin-top: 12px;" type="primary" :disabled="!registratieLanModel.requestor.hasAgreedToPrivacyPolicy" @click="next">next</el-button> 
 </div>
 </template>
 

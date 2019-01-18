@@ -8,10 +8,13 @@
     <p>Create your own team and invite your friends!</p>
      <ul class="nav nav-pills">
         <li class="nav-item ">
-          <router-link class="nav-link active" to="/registratie">Registration</router-link>
+          <router-link class="nav-link active" to="/registration">Registration</router-link>
         </li>
          <li class="nav-item">
           <router-link class="nav-link" to="/createteam">Create team</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/login">Login</router-link>
         </li>
       
      
