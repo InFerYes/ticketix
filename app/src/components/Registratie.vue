@@ -6,9 +6,9 @@
     <el-step title="privacy policy"></el-step>
     <el-step title="confirmation"></el-step>
   </el-steps>
-  <RegistratieForm :registratieLanModel="registratieModel" v-if="active==0" @stapRegistratieGegevens="reservatieGegevensCallBack"></RegistratieForm>
-  <RegistratieReservering :registratieLanModel="registratieModel" v-if="active==1" @stapReservering="reserveringCallBack"></RegistratieReservering>
-  <RegistratieActivatie :registratieLanModel="registratieModel" v-if="active==2" @stapBevestiging="BevestigingCallBack"></RegistratieActivatie>
+  <RegistratieForm :person="person" v-if="active==0" @stapRegistratieGegevens="reservatieGegevensCallBack"></RegistratieForm>
+  <RegistratieReservering :person="person" v-if="active==1" @stapReservering="reserveringCallBack"></RegistratieReservering>
+  <RegistratieActivatie :person="person" v-if="active==2" @stapBevestiging="BevestigingCallBack"></RegistratieActivatie>
  
 </div>
 </template>
@@ -18,14 +18,13 @@ import { Component, Prop, Vue,Provide } from 'vue-property-decorator';
 import RegistratieForm from './RegistratieForm.vue'
 import RegistratieReservering from './RegistratieReservering.vue'
 import RegistratieActivatie from './RegistratieActivatie.vue'
-import {registratieLan} from '../models/RegistratieLan'
 import { person } from '../models/Person'
 @Component(
   {components:{RegistratieForm,RegistratieReservering,RegistratieActivatie}}
 )
 export default class Registratie extends Vue {
  
-  public registratieModel=new registratieLan();
+  public person=new person();
  
 
   constructor() {
@@ -34,17 +33,17 @@ export default class Registratie extends Vue {
 
   public active:number=0;
 
-  reservatieGegevensCallBack(registratieLan:registratieLan){
-    this.registratieModel=registratieLan;
+  reservatieGegevensCallBack(registratieLan:person){
+    this.person=registratieLan;
     this.active++;
   }
-  reserveringCallBack(registratieLan:registratieLan,isnextstep:boolean){
-       this.registratieModel=registratieLan;
+  reserveringCallBack(registratieLan:person,isnextstep:boolean){
+       this.person=registratieLan;
     if(isnextstep)this.active++; else this.active--;
 
   }
-  BevestigingCallBack(registratieLan:registratieLan,isnextstep:boolean){
-       this.registratieModel=registratieLan;
+  BevestigingCallBack(registratieLan:person,isnextstep:boolean){
+       this.person=registratieLan;
     if(isnextstep)this.active++; else this.active--;
 
   }

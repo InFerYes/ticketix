@@ -9,4 +9,5 @@ export class person{
     public hasOrderedTicket:boolean=false;
     public ticket:ticket=new ticket;
     public hasActivated: boolean=false;
+    public uid:string="";
 }

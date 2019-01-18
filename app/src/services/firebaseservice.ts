@@ -1,9 +1,9 @@
 import firebase from 'firebase';
-import {registratieLan} from  '../models/RegistratieLan'
+import { person } from '../models/Person';
 import Router from '../router';
 
 
-export class FirebaseService{
+export class FirebaseService {
     config = {
         apiKey: "AIzaSyBQsjv52fgK0XSr6rxseqyNLPLgja-MlZo",
         authDomain: "ticketix-e991f.firebaseapp.com",
@@ -11,39 +11,60 @@ export class FirebaseService{
         projectId: "ticketix-e991f",
         storageBucket: "ticketix-e991f.appspot.com",
         messagingSenderId: "612195648739"
-      };
+    };
 
     constructor() {
         firebase.initializeApp(this.config);
 
     }
-    saveRegistratie(registratie:registratieLan){
-        firebase.database().ref('registration/' + registratie.registerCode).set(registratie);
+    saveRegistratie(person: person) {
+        firebase.database().ref('registration/' + person.uid).set(person);
+        console.log(person);
+        //Router.replace('login')
     }
-    login (email:string, password:string) {
+    login(email: string, password: string) {
         firebase.auth().signInWithEmailAndPassword(email, password).then(
             (user) => {
                 Router.replace('profile')
             },
             (err) => {
-              alert('Oops. ' + err.message)
+                alert('Oops. ' + err.message)
             }
         );
     }
-    signup(email:string,password:string) {
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(
-            (user) => {
-                Router.replace('login')
+    signup(person:person, password: string){
+        firebase.auth().createUserWithEmailAndPassword(person.email, password).then(
+            (user: any) => {
+                person.uid = user.uid;
+                this.saveRegistratie(person);                
             },
             (err) => {
-              alert('Oops. ' + err.message)
+                alert('Oops. ' + err.message)
             }
         );
     }
+
+    //Werkend promise voorbeeld:
+    // signup(requestor:person, password: string): Promise<string> {
+    //     let promise = new Promise<string>((resolve, reject) => { });
+    //     firebase.auth().createUserWithEmailAndPassword(email, password).then(
+    //         (user: any) => {
+    //             Router.replace('login')
+    //             console.log(user);
+    //             promise = Promise.resolve(user.uid);
+    //         },
+    //         (err) => {
+    //             alert('Oops. ' + err.message)
+    //             promise = Promise.resolve("");
+    //         }
+    //     );
+    //     return promise;
+    // }
+
     logout() {
         firebase.auth().signOut().then(
             () => {
-            Router.replace('login')
+                Router.replace('login')
             }
         );
     }
