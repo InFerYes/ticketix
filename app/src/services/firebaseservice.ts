@@ -13,8 +13,6 @@ export class FirebaseService {
         messagingSenderId: "612195648739"
     };
 
-    //fb = firebase
-
     constructor() {
         firebase.initializeApp(this.config);
 
@@ -22,7 +20,7 @@ export class FirebaseService {
     saveRegistratie(person: person) {
         console.log(person.uid);
         firebase.database().ref('person/' + person.uid).set(person);
-        //Router.replace('login')
+        Router.replace('profile')
     }
     login(email: string, password: string) {
         firebase.auth().signInWithEmailAndPassword(email, password).then(
@@ -57,10 +55,12 @@ export class FirebaseService {
     getPersonalDetails(): person {
         let user: any;
         let retval: person = <person>{};
+
         user = firebase.auth().currentUser;
         firebase.database().ref('person/' + user.uid).once('value').then((value: any) => {
-            retval = value;
-        }).catch((error) => {
+            retval = <person>value.val();
+        }).catch((error: any) => {
+            console.log(error);
         });
         return retval;
     }

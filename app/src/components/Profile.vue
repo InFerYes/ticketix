@@ -39,7 +39,6 @@ export default class Profile extends Vue {
   public person: person = new person();
   updatePersonalDetails(): void {}
   getPersonalDetails(): void {
-    console.log("retrieve attempted");
     this.person = firebaseService.getPersonalDetails();
   }
   get zijnGegevensValid() {

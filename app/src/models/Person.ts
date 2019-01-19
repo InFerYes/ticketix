@@ -8,6 +8,5 @@ export class person{
     public hasPaid:boolean=false;
     public hasOrderedTicket:boolean=false;
     public ticket:ticket=new ticket;
-    public hasActivated: boolean=false;
     public uid:string="";
 }
