@@ -1,5 +1,6 @@
 <template>
-  <div class="login">
+  <div>
+     <h1>Log in</h1>
     <el-form>
       <el-form-item label="Email">
         <el-input v-model="email"></el-input>

@@ -1,31 +1,49 @@
 <template>
-
   <div class="container-fluid">
     <div class="jumbotron">
-    <h1 class="display-4">LAN Party registration</h1>
-    <p class="lead">Welcome! Registration is easy and painless.</p>
-    <hr class="my-4">
-    <p>Create your own team and invite your friends!</p>
-     <ul class="nav nav-pills">
-        <li class="nav-item ">
+      <h1 class="display-4">Ticketix</h1>
+      <p class="lead">LAN Management made easy.</p>
+      <hr class="my-4">
+      <ul class="nav nav-pills">
+        <li class="nav-item" v-if="isLoggedin">
           <router-link class="nav-link active" to="/registration">Registration</router-link>
         </li>
-         <li class="nav-item">
+        <li class="nav-item" v-if="isLoggedin">
           <router-link class="nav-link" to="/createteam">Create team</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="isLoggedin">
           <router-link class="nav-link" to="/login">Login</router-link>
         </li>
-      
-     
-    </ul>
+        <li class="nav-item" v-if="isLoggedin">
+          <router-link class="nav-link" to="/profile">Profile</router-link>
+        </li>
+      </ul>
     </div>
-
-   
+    <el-button type="text" @click="logout">Log out</el-button>
     <router-view/>
   </div>
 </template>
 
-<style>
+<script lang="ts">
+import { firebaseService } from "./services/firebaseservice";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
+@Component
+export default class RegistratieForm extends Vue {
+  isLoggedin: boolean=true;
+  //isLoggedin: boolean=firebaseService.isLoggedIn();//zorgen voor later
+  logout(): void {
+    firebaseService.logout();
+    this.isLoggedin = false;
+  }
+
+  //Werkend voorbeeld van een watch
+  // @Watch('firebaseService.isLoggedin')
+  // onPropertyChanged(value: boolean, oldValue: boolean) {
+  //   this.isLoggedin = value;
+  // }
+}
+</script>
+
+<style>
 </style>

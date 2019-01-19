@@ -22,7 +22,7 @@ const router = new Router({
     {
       path: '/registration',
       name: 'registration',
-      component:Registratie
+      component: Registratie
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -32,7 +32,7 @@ const router = new Router({
       path: '/createteam',
       name: 'createteam',
       component: CreateTeam,
-      meta: {requiresAuth: true }
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
