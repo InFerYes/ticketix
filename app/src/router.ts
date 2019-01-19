@@ -5,10 +5,15 @@ import Registratie from './components/Registratie.vue'
 import CreateTeam from './components/CreateTeam.vue'
 import Login from './components/Login.vue'
 import Profile from './components/Profile.vue'
+import firebase from 'firebase';
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
+    {
+      path: '*',
+      redirect: 'login'
+    },
     {
       path: '/',
       name: 'home',
@@ -26,7 +31,8 @@ export default new Router({
     {
       path: '/createteam',
       name: 'createteam',
-      component: CreateTeam
+      component: CreateTeam,
+      meta: {requiresAuth: true }
     },
     {
       path: '/login',
@@ -36,7 +42,20 @@ export default new Router({
     {
       path: '/profile',
       name: 'profile',
-      component: Profile
+      component: Profile,
+      meta: { requiresAuth: true }
     },
   ]
-})
+
+});
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !currentUser) next('login');
+  else if (!requiresAuth && currentUser) next("home");
+  else next();
+});
+
+export default router;

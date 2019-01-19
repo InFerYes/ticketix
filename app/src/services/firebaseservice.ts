@@ -19,7 +19,6 @@ export class FirebaseService {
     }
     saveRegistratie(person: person) {
         firebase.database().ref('registration/' + person.uid).set(person);
-        console.log(person);
         //Router.replace('login')
     }
     login(email: string, password: string) {
@@ -35,7 +34,8 @@ export class FirebaseService {
     signup(person:person, password: string){
         firebase.auth().createUserWithEmailAndPassword(person.email, password).then(
             (user: any) => {
-                person.uid = user.uid;
+                alert(user.User.uid);
+                person.uid = user.User.uid;
                 this.saveRegistratie(person);                
             },
             (err) => {
