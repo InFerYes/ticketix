@@ -19,7 +19,6 @@
     </div>
     <hr>
     <h3>One more thing</h3>
-    {{registratieLanModel}}
     <h5>Please choose a password for your account</h5>
     <el-row>
       <el-col :span="6">

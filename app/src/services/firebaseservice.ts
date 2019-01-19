@@ -13,14 +13,15 @@ export class FirebaseService {
         messagingSenderId: "612195648739"
     };
 
-    fb = firebase
+    //fb = firebase
 
     constructor() {
         firebase.initializeApp(this.config);
 
     }
     saveRegistratie(person: person) {
-        firebase.database().ref('registration/' + person.uid).set(person);
+        console.log(person.uid);
+        firebase.database().ref('person/' + person.uid).set(person);
         //Router.replace('login')
     }
     login(email: string, password: string) {
@@ -35,9 +36,8 @@ export class FirebaseService {
     }
     signup(person: person, password: string) {
         firebase.auth().createUserWithEmailAndPassword(person.email, password).then(
-            (user: any) => {
-                alert(user.User.uid);
-                person.uid = user.User.uid;
+            (newauth: any) => {
+                person.uid = newauth.user.uid;
                 this.saveRegistratie(person);
             },
             (err) => {
@@ -53,6 +53,16 @@ export class FirebaseService {
         };
 
         return isloggedin;
+    }
+    getPersonalDetails(): person {
+        let user: any;
+        let retval: person = <person>{};
+        user = firebase.auth().currentUser;
+        firebase.database().ref('person/' + user.uid).once('value').then((value: any) => {
+            retval = value;
+        }).catch((error) => {
+        });
+        return retval;
     }
 
     //Werkend promise voorbeeld:

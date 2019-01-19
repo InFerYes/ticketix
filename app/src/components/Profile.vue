@@ -2,7 +2,7 @@
   <div>
     <h1>Your profile</h1>
     <h3>This is what we have on record:</h3>
-   <el-form label-width="100px">
+    <el-form label-width="100px">
       <el-form-item label="First name">
         <el-input v-model="person.firstName"></el-input>
       </el-form-item>
@@ -13,21 +13,36 @@
         <el-input v-model="person.nickName"></el-input>
       </el-form-item>
       <el-form-item label="Email">
-        <el-input v-model="person.email"></el-input>
+        <el-input v-model="person.email" :disabled="true"></el-input>
       </el-form-item>
     </el-form>
-    <el-button style="margin-top: 12px;" type="primary" :disabled="!zijnGegevensValid" @click="next">save</el-button>
+    <el-button
+      style="margin-top: 12px;"
+      type="primary"
+      :disabled="!zijnGegevensValid"
+      @click="updatePersonalDetails"
+    >save</el-button>
   </div>
 </template>
 
 <script lang="ts">
 import { person } from "../models/Person";
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { firebaseService } from "@/services/firebaseservice";
 
 @Component
 export default class Profile extends Vue {
+  constructor() {
+    super();
+    this.getPersonalDetails();
+  }
   public person: person = new person();
-   get zijnGegevensValid() {
+  updatePersonalDetails(): void {}
+  getPersonalDetails(): void {
+    console.log("retrieve attempted");
+    this.person = firebaseService.getPersonalDetails();
+  }
+  get zijnGegevensValid() {
     let isValid: boolean = true;
 
     if (
@@ -47,5 +62,4 @@ export default class Profile extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

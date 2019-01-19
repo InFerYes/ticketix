@@ -34,7 +34,7 @@ export default class RegistratieForm extends Vue {
   //isLoggedin: boolean=firebaseService.isLoggedIn();//zorgen voor later
   logout(): void {
     firebaseService.logout();
-    this.isLoggedin = false;
+    //this.isLoggedin = false;
   }
 
   //Werkend voorbeeld van een watch
