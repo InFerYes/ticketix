@@ -1,6 +1,7 @@
 import firebase from 'firebase';
-import { person } from '../models/Person';
-import Router from '../router';
+import { person } from '@/models/Person';
+import Router from '@/router';
+import { team } from '@/models/Team';
 
 
 export class FirebaseService {
@@ -12,6 +13,8 @@ export class FirebaseService {
         storageBucket: "ticketix-e991f.appspot.com",
         messagingSenderId: "612195648739"
     };
+
+    user!: person;;
 
     constructor() {
         firebase.initializeApp(this.config);
@@ -28,6 +31,11 @@ export class FirebaseService {
             console.log("caught");
             this.saveRegistratie(person);
         });
+    }
+
+    saveTeam(team: team) {
+        let ref = firebase.database().ref('team/').push(team);
+        let key = ref.key; //POC
     }
 
     login(email: string, password: string) {
@@ -64,6 +72,14 @@ export class FirebaseService {
          return promise;
     }
 
+    get currentUid():string {
+        return firebase.auth().currentUser.uid;
+    }
+
+    get currentUser():person {
+        return this.user;
+    }
+
     getPersonalDetails(): Promise<person> {
         let user: any;
         user = firebase.auth().currentUser;
@@ -76,10 +92,13 @@ export class FirebaseService {
                     p.nickName = "Please edit these values and hit save.";
                     p.email = user.email;
                     
+                    this.user = p;
                     return p;
+                    
                 }
                 else {
-                    return value.val(); 
+                    this.user = value.val();
+                    return value.val();
                 }
             });
         }
