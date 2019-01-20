@@ -18,10 +18,18 @@ export class FirebaseService {
 
     }
     saveRegistratie(person: person) {
-        console.log(person.uid);
         firebase.database().ref('person/' + person.uid).set(person);
         Router.replace('profile')
     }
+
+    updateRegistratie(person: person) {
+        person.uid = firebase.auth().currentUser.uid || "9999somethinggotfucked9999"; //auth doesn't exist, save it anyway
+        firebase.database().ref('person/' + person.uid).update(person).catch(() => {
+            console.log("caught");
+            this.saveRegistratie(person);
+        });
+    }
+
     login(email: string, password: string) {
         firebase.auth().signInWithEmailAndPassword(email, password).then(
             (user) => {
@@ -43,27 +51,62 @@ export class FirebaseService {
             }
         );
     }
-    isLoggedIn(): boolean {
-        let isloggedin: boolean = false;
-
-        if (firebase.auth().currentUser != null) {
-            isloggedin = true;
-        };
-
-        return isloggedin;
+    isLoggedIn(): Promise<boolean> {
+        let promise = new Promise<boolean>((resolve, reject) => {
+            if (firebase.auth().currentUser != null) {
+                resolve(true);
+                
+            }
+            else {
+                reject(false);
+            }
+         });
+         return promise;
     }
-    getPersonalDetails(): person {
+
+    getPersonalDetails(): Promise<person> {
         let user: any;
-        let retval: person = <person>{};
-
         user = firebase.auth().currentUser;
-        firebase.database().ref('person/' + user.uid).once('value').then((value: any) => {
-            retval = <person>value.val();
-        }).catch((error: any) => {
-            console.log(error);
-        });
-        return retval;
+        if (user != null) {
+            return firebase.database().ref('person/' + user.uid).once('value').then((value) => { 
+                if (value.val() == null) {
+                    let p = new person();
+                    p.firstName = "Oops, you don't seem to exist.";
+                    p.lastName = "At least not in our records.";
+                    p.nickName = "Please edit these values and hit save.";
+                    p.email = user.email;
+                    
+                    return p;
+                }
+                else {
+                    return value.val(); 
+                }
+            });
+        }
+        else {
+            return Promise.resolve(new person());
+        }
     }
+
+    //Werkend voorbeeld van continuous (live) ophalen van data
+    // getPersonalDetails2(): person {
+    //     let user: any;
+    //     let retval: person = <person>{};
+
+    //     // firebase.database().ref('posts/' + postId + '/starCount');
+    //     //     starCountRef.on('value', function(snapshot) {
+    //     //     updateStarCount(postElement, snapshot.val());
+    //     //     });
+
+    //     user = firebase.auth().currentUser;
+    //     let fb = firebase.database().ref('person/' + user.uid);
+    //     fb.on('value', (snapshot) => {
+    //         if (snapshot != null)
+    //         retval = snapshot.val();
+    //     });
+    //     return retval;
+    // }
+
 
     //Werkend promise voorbeeld:
     // signup(requestor:person, password: string): Promise<string> {

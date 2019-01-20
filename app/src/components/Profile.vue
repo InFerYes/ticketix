@@ -27,19 +27,26 @@
 
 <script lang="ts">
 import { person } from "../models/Person";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { firebaseService } from "@/services/firebaseservice";
 
 @Component
 export default class Profile extends Vue {
+  person: person = new person();
+
   constructor() {
     super();
-    this.getPersonalDetails();
+    this.getData();
   }
-  public person: person = new person();
-  updatePersonalDetails(): void {}
-  getPersonalDetails(): void {
-    this.person = firebaseService.getPersonalDetails();
+
+  updatePersonalDetails(): void {
+    firebaseService.updateRegistratie(this.person);
+  }
+  
+  getData() {
+    firebaseService.getPersonalDetails().then(value => {
+      this.person = value;
+    });
   }
   get zijnGegevensValid() {
     let isValid: boolean = true;

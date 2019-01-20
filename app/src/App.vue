@@ -5,10 +5,10 @@
       <p class="lead">LAN Management made easy.</p>
       <hr class="my-4">
       <ul class="nav nav-pills">
-        <li class="nav-item" v-if="isLoggedin">
+        <li class="nav-item" v-if="!isLoggedin">
           <router-link class="nav-link active" to="/registration">Registration</router-link>
         </li>
-        <li class="nav-item" v-if="isLoggedin">
+        <li class="nav-item" v-if="!isLoggedin">
           <router-link class="nav-link" to="/login">Login</router-link>
         </li>
         <li class="nav-item" v-if="isLoggedin">
@@ -26,18 +26,29 @@
 
 <script lang="ts">
 import { firebaseService } from "./services/firebaseservice";
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class RegistratieForm extends Vue {
-  isLoggedin: boolean=true;
-  //isLoggedin: boolean=firebaseService.isLoggedIn();//zorgen voor later
-  logout(): void {
-    firebaseService.logout();
-    //this.isLoggedin = false;
+  isLoggedin: boolean = false;
+
+  constructor() {
+    super();
+    this.checkLogin();
   }
 
-  //Werkend voorbeeld van een watch
+  checkLogin(): void {
+    firebaseService.isLoggedIn().then(value => {
+      this.isLoggedin = value;
+    });
+  }
+
+  logout(): void {
+    firebaseService.logout();
+    this.isLoggedin = false;
+  }
+
+  //Werkend voorbeeld van een watch (doe ook: import { Component, Prop, Vue, Watch } from "vue-property-decorator";)
   // @Watch('firebaseService.isLoggedin')
   // onPropertyChanged(value: boolean, oldValue: boolean) {
   //   this.isLoggedin = value;
