@@ -1,7 +1,12 @@
 <template>
 <div>
-  <h1>Create team</h1>
-  <h2>hello</h2>
+  <h1>Your team</h1>
+  <h3>This is what we have on record:</h3>
+  <el-form label-width="100px">
+      <el-form-item label="Team name">
+        <el-input v-model="team.name"></el-input>
+      </el-form-item>
+    </el-form>
   <el-button
       style="margin-top: 12px;"
       type="primary"
@@ -12,15 +17,17 @@
 </template>
 
 <script lang="ts">
+import { team } from "@/models/Team";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { firebaseService } from "@/services/firebaseservice";
-import { team } from "@/models/Team";
-import { person } from '@/models/Person';
 
 @Component
-export default class CreateTeam extends Vue {
+export default class TeamView extends Vue {
+  team: team = new team();
+
   constructor() {
     super();
+    this.getTeam();
   }
 
   updateTeam() {
@@ -28,8 +35,13 @@ export default class CreateTeam extends Vue {
     t.name = "test";
     t.leader = firebaseService.currentUid;
     t.members.push(firebaseService.currentUid);
-    //t.members.push(firebaseService.currentUser);
     firebaseService.saveTeam(t);
+  }
+
+  getTeam(){
+    firebaseService.getTeamDetails().then(value => {
+      this.team = value;
+    });
   }
 }
 </script>

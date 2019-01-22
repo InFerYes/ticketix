@@ -14,7 +14,7 @@ export class FirebaseService {
         messagingSenderId: "612195648739"
     };
 
-    user!: person;;
+    user!: person;
 
     constructor() {
         firebase.initializeApp(this.config);
@@ -34,6 +34,7 @@ export class FirebaseService {
     }
 
     saveTeam(team: team) {
+        //TODO: if key is not empty, update, else push
         let ref = firebase.database().ref('team/').push(team);
         let key = ref.key; //POC
     }
@@ -63,20 +64,20 @@ export class FirebaseService {
         let promise = new Promise<boolean>((resolve, reject) => {
             if (firebase.auth().currentUser != null) {
                 resolve(true);
-                
+
             }
             else {
                 reject(false);
             }
-         });
-         return promise;
+        });
+        return promise;
     }
 
-    get currentUid():string {
+    get currentUid(): string {
         return firebase.auth().currentUser.uid;
     }
 
-    get currentUser():person {
+    get currentUser(): person {
         return this.user;
     }
 
@@ -84,17 +85,17 @@ export class FirebaseService {
         let user: any;
         user = firebase.auth().currentUser;
         if (user != null) {
-            return firebase.database().ref('person/' + user.uid).once('value').then((value) => { 
+            return firebase.database().ref('person/' + user.uid).once('value').then((value) => {
                 if (value.val() == null) {
                     let p = new person();
                     p.firstName = "Oops, you don't seem to exist.";
                     p.lastName = "At least not in our records.";
                     p.nickName = "Please edit these values and hit save.";
                     p.email = user.email;
-                    
+
                     this.user = p;
                     return p;
-                    
+
                 }
                 else {
                     this.user = value.val();
@@ -104,6 +105,35 @@ export class FirebaseService {
         }
         else {
             return Promise.resolve(new person());
+        }
+    }
+
+    getTeamDetails(): Promise<team> {
+        let user: any;
+        let t: team;
+        user = firebase.auth().currentUser;
+        if (user != null) {
+            return firebase.database().ref('team/').orderByChild('leader').equalTo(user.uid).once('value').then((value) => {
+                if (value.val() == null) {
+                    return new team(); //return empty object if database yields no results
+                }
+                else {
+                    if (value.numChildren() != 1) {
+                        return new team(); //Only expecting 1, if more return, something got ffffucked
+                    }
+                    else {
+                        let retval: any;
+                        value.forEach((val) => {
+                            retval = val.val();
+                            
+                        })
+                        return retval;
+                    }
+                }
+            });
+        }
+        else {
+            return Promise.resolve(new team()); //not authed
         }
     }
 

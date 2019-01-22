@@ -12,11 +12,12 @@
           <router-link class="nav-link" to="/login">Login</router-link>
         </li>
         <li class="nav-item" v-if="isLoggedin">
-          <router-link class="nav-link" to="/createteam">Create team</router-link>
+          <router-link class="nav-link" to="/teamview">Team</router-link>
         </li>
         <li class="nav-item" v-if="isLoggedin">
           <router-link class="nav-link" to="/profile">Profile</router-link>
         </li>
+        <p v-else>Loading...</p>
       </ul>
     </div>
     <el-button type="text" @click="logout">Log out</el-button>

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
 import Registratie from './components/Registratie.vue'
-import CreateTeam from './components/CreateTeam.vue'
+import TeamView from './components/Team.vue'
 import Login from './components/Login.vue'
 import Profile from './components/Profile.vue'
 import firebase from 'firebase';
@@ -29,9 +29,9 @@ const router = new Router({
       //component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/createteam',
-      name: 'createteam',
-      component: CreateTeam,
+      path: '/teamview',
+      name: 'teamview',
+      component: TeamView,
       meta: { requiresAuth: true }
     },
     {
