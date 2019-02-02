@@ -36,7 +36,11 @@ export class FirebaseService {
     saveTeam(team: team) {
         //TODO: if key is not empty, update, else push
         let ref = firebase.database().ref('team/').push(team);
-        let key = ref.key; //POC
+        let key = ref.key;
+        this.getPersonalDetails().then(function(p) {
+            p.tid = key;
+            firebase.database().ref('person/' + p.uid).update(p);
+        });
     }
 
     login(email: string, password: string) {
@@ -104,36 +108,102 @@ export class FirebaseService {
             });
         }
         else {
-            return Promise.resolve(new person());
+            return Promise.reject(new person());
         }
     }
 
-    getTeamDetails(): Promise<team> {
+    getPersonalDetails2(): Promise<any> {
         let user: any;
-        let t: team;
         user = firebase.auth().currentUser;
         if (user != null) {
-            return firebase.database().ref('team/').orderByChild('leader').equalTo(user.uid).once('value').then((value) => {
+            return firebase.database().ref('person/')
+            .orderByChild('tid')
+                        .equalTo('-LWhCMCT4XXdu4ka41kK')
+            .once('value').then((value) => {
                 if (value.val() == null) {
-                    return new team(); //return empty object if database yields no results
+                    let p = new person();
+                    p.firstName = "Oops, you don't seem to exist.";
+                    p.lastName = "At least not in our records.";
+                    p.nickName = "Please edit these values and hit save.";
+                    p.email = user.email;
+
+                    this.user = p;
+                    return p;
+
                 }
                 else {
-                    if (value.numChildren() != 1) {
-                        return new team(); //Only expecting 1, if more return, something got ffffucked
-                    }
-                    else {
-                        let retval: any;
-                        value.forEach((val) => {
-                            retval = val.val();
-                            
-                        })
-                        return retval;
-                    }
+                    this.user = value.val();
+                    return value.val();
                 }
             });
         }
         else {
-            return Promise.resolve(new team()); //not authed
+            return Promise.reject(new person());
+        }
+    }
+
+    getTeamDetails(): Promise<team> {
+        let retval: team = new team();
+        let user: any;
+        let tempteam: team;
+        user = firebase.auth().currentUser;
+        if (user != null) {
+            return firebase.database()
+                .ref('team/')
+                .orderByChild('leader')
+                .equalTo(user.uid)
+                .once('value')
+                .then((returnteam) => {
+                    tempteam = returnteam.val()[Object.keys(returnteam.val())[0]];
+                        return firebase.database()
+                        .ref('person/')
+                        .orderByChild('tid')
+                        .equalTo(Object.keys(returnteam.val())[0])
+                        .once('value')
+                        .then((teammembers) => {
+                                if (teammembers.val() == null)
+                                {
+                                    console.log("nope");
+                                }
+                                else {
+                                    console.log("members");
+                                    console.log(teammembers);
+                                    //tempteam.members2 = teammembers.val();
+                                    return tempteam;
+                                }
+                                
+                            })
+                });
+        }
+        else {
+            return Promise.reject(new team()); //not authed
+        }
+    }
+
+    getPersonByUid(uid: string): Promise<person> {
+        let user: any;
+        user = firebase.auth().currentUser;
+        if (user != null) {
+            return firebase.database().ref('person/' + uid).once('value').then((value) => {
+                if (value.val() == null) {
+                    let p = new person();
+                    p.firstName = "Oops, you don't seem to exist.";
+                    p.lastName = "At least not in our records.";
+                    p.nickName = "Please edit these values and hit save.";
+                    p.email = user.email;
+
+                    this.user = p;
+                    return p;
+
+                }
+                else {
+                    this.user = value.val();
+                    return value.val();
+                }
+            });
+        }
+        else {
+            return Promise.reject(new person()); // not authed
         }
     }
 

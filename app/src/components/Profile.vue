@@ -47,6 +47,9 @@ export default class Profile extends Vue {
     firebaseService.getPersonalDetails().then(value => {
       this.person = value;
     });
+    firebaseService.getPersonalDetails2().then(value => {
+      let test:any = value;
+    });
   }
   get zijnGegevensValid() {
     let isValid: boolean = true;
