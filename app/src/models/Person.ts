@@ -11,4 +11,5 @@ export class person{
     public createdate:Date=new Date;
     public modifdate=new Date;
     public teamname:string="";
+    public iduser:number=0;
 }

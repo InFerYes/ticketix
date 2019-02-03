@@ -5,6 +5,7 @@ import Registratie from './components/Registratie.vue'
 import TeamView from './components/Team.vue'
 import Login from './components/Login.vue'
 import Profile from './components/Profile.vue'
+import VerifyEmail from './components/VerifyEmail.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -44,6 +45,12 @@ const router = new Router({
       component: Profile//,
       //meta: { requiresAuth: true }
     },
+    {
+      path: '/verifyemail',
+      name: 'verifyemail',
+      component: VerifyEmail
+
+    }
   ]
 
 });

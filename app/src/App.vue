@@ -26,28 +26,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { message } from "./models/Message";
 
 @Component
 export default class RegistratieForm extends Vue {
-  isLoggedin: boolean = true;
+  isLoggedin: boolean = false;
 
   constructor() {
     super();
     this.checkLogin();
   }
 
-  checkLogin(): void {
-  }
+  checkLogin(): void {}
 
-  logout(): void {
-  }
+  logout(): void {}
 
   //Werkend voorbeeld van een watch (doe ook: import { Component, Prop, Vue, Watch } from "vue-property-decorator";)
-  // @Watch('firebaseService.isLoggedin')
-  // onPropertyChanged(value: boolean, oldValue: boolean) {
-  //   this.isLoggedin = value;
-  // }
+  @Watch("backendService.messages")
+  onPropertyChanged(value: message[], oldValue: message[]) {
+    value.forEach(msg => {
+      this.$notify({
+        title: msg.title,
+        message: msg.message,
+        type: "error"
+      });
+    });
+  }
 }
 </script>
 
