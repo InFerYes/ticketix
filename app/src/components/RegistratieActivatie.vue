@@ -3,15 +3,15 @@
     <h3>Summary of your data</h3>
     <div class="row">
       <div class="col-3">First name</div>
-      <div class="col-3">{{person.firstName}}</div>
+      <div class="col-3">{{person.firstname}}</div>
     </div>
     <div class="row">
       <div class="col-3">Last name</div>
-      <div class="col-3">{{person.lastName}}</div>
+      <div class="col-3">{{person.lastname}}</div>
     </div>
     <div class="row">
       <div class="col-3">Nickname</div>
-      <div class="col-3">{{person.nickName}}</div>
+      <div class="col-3">{{person.nickname}}</div>
     </div>
     <div class="row">
       <div class="col-3">Email</div>
@@ -44,10 +44,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { person } from "../models/Person";
-import { firebaseService } from "../services/firebaseservice";
 @Component
 export default class RegistratieActivatie extends Vue {
-  public service = firebaseService;
   password: string = "";
 
   @Prop()
@@ -59,7 +57,7 @@ export default class RegistratieActivatie extends Vue {
     } else if (this.password.length < 10) {
       alert("Sorry, too short! Use at least 10 characters.");
     } else {
-      this.service.signup(this.person, this.password);
+      
     }
   }
   back() {

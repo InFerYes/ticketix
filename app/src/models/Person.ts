@@ -1,12 +1,14 @@
-import { ticket } from './Ticket';
 export class person{
-    public firstName:string="";
-    public lastName:string="";
+    public id:number=0;
+    public firstname:string="";
+    public lastname:string="";
+    public nickname:string="";
+    public hasagreedtoprivacypolicy:boolean=false;
+    public haspaid:boolean=false;
+    public hasorderedticket:boolean=false;
+    public idticket:number=0;
     public email:string="";
-    public nickName:string="";
-    public hasAgreedToPrivacyPolicy:boolean=false;
-    public hasPaid:boolean=false;
-    public hasOrderedTicket:boolean=false;
-    public ticket:ticket=new ticket;
-    public uid:string="";
+    public createdate:Date=new Date;
+    public modifdate=new Date;
+    public teamname:string="";
 }

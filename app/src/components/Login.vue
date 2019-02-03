@@ -18,7 +18,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { firebaseService } from "../services/firebaseservice";
 
 @Component
 export default class Login extends Vue {
@@ -26,7 +25,6 @@ export default class Login extends Vue {
   password: string = "";
   //@Prop()
   login() {
-    firebaseService.login(this.email, this.password);
   }
 }
 </script>

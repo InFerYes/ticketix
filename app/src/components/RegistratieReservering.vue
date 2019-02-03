@@ -1,9 +1,9 @@
 <template>
 <div>
     <p>You agree to have read our <a href="https://www.holysh1t.net/about/privacy-policy/" target="_blank">privacy policy </a>
-    <el-checkbox v-model="person.hasAgreedToPrivacyPolicy" label="I agree" border></el-checkbox></p>
+    <el-checkbox v-model="person.hasagreedtoprivacypolicy" label="I agree" border></el-checkbox></p>
     <el-button style="margin-top: 12px;" type="info"  @click="back" plain>previous</el-button>
-    <el-button style="margin-top: 12px;" type="primary" :disabled="!person.hasAgreedToPrivacyPolicy" @click="next">next</el-button> 
+    <el-button style="margin-top: 12px;" type="primary" :disabled="!person.hasagreedtoprivacypolicy" @click="next">next</el-button> 
 </div>
 </template>
 

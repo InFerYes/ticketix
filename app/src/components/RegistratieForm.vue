@@ -3,13 +3,13 @@
     <h3>Please tell us who you are:</h3>
     <el-form label-width="100px">
       <el-form-item label="First name">
-        <el-input v-model="person.firstName"></el-input>
+        <el-input v-model="person.firstname"></el-input>
       </el-form-item>
       <el-form-item label="Last name">
-        <el-input v-model="person.lastName"></el-input>
+        <el-input v-model="person.lastNnme"></el-input>
       </el-form-item>
       <el-form-item label="Nickname">
-        <el-input v-model="person.nickName"></el-input>
+        <el-input v-model="person.nickname"></el-input>
       </el-form-item>
       <el-form-item label="Email">
         <el-input v-model="person.email"></el-input>
@@ -32,8 +32,8 @@ export default class RegistratieForm extends Vue {
     let isValid: boolean = true;
 
     if (
-      this.person.firstName.length > 0 &&
-      this.person.lastName.length > 0 &&
+      this.person.firstname.length > 0 &&
+      this.person.lastname.length > 0 &&
       this.person.email.length > 0
     ) {
       isValid = true;

@@ -5,7 +5,6 @@ import Registratie from './components/Registratie.vue'
 import TeamView from './components/Team.vue'
 import Login from './components/Login.vue'
 import Profile from './components/Profile.vue'
-import firebase from 'firebase';
 Vue.use(Router)
 
 const router = new Router({
@@ -31,8 +30,8 @@ const router = new Router({
     {
       path: '/teamview',
       name: 'teamview',
-      component: TeamView,
-      meta: { requiresAuth: true }
+      component: TeamView//,
+      //meta: { requiresAuth: true }
     },
     {
       path: '/login',
@@ -42,20 +41,20 @@ const router = new Router({
     {
       path: '/profile',
       name: 'profile',
-      component: Profile,
-      meta: { requiresAuth: true }
+      component: Profile//,
+      //meta: { requiresAuth: true }
     },
   ]
 
 });
 
-router.beforeEach((to, from, next) => {
-  const currentUser = firebase.auth().currentUser;
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+// router.beforeEach((to, from, next) => {
+//   // const currentUser = firebase.auth().currentUser;
+//   // const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next('login');
-  else if (!requiresAuth && currentUser) next("home");
-  else next();
-});
+//   // if (requiresAuth && !currentUser) next('login');
+//   // else if (!requiresAuth && currentUser) next("home");
+//   // else next();
+// });
 
 export default router;

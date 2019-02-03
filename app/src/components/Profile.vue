@@ -2,18 +2,36 @@
   <div>
     <h1>Your profile</h1>
     <h3>This is what we have on record:</h3>
-    <el-form label-width="100px">
+    <el-form label-width="220px">
       <el-form-item label="First name">
-        <el-input v-model="person.firstName"></el-input>
+        <el-input v-model="person.firstname"></el-input>
       </el-form-item>
       <el-form-item label="Last name">
-        <el-input v-model="person.lastName"></el-input>
+        <el-input v-model="person.lastname"></el-input>
       </el-form-item>
       <el-form-item label="Nickname">
-        <el-input v-model="person.nickName"></el-input>
+        <el-input v-model="person.nickname"></el-input>
       </el-form-item>
       <el-form-item label="Email">
         <el-input v-model="person.email" :disabled="true"></el-input>
+      </el-form-item>
+      <el-form-item label="Has agreed to the privacy policy">
+        <el-checkbox v-model="person.emhasagreedtoprivacypolicyail" :disabled="true"></el-checkbox>
+      </el-form-item>
+      <el-form-item v-if="person.hasorderedticket==true" label="Has paid for ticket">
+        <el-checkbox v-model="person.haspaid" :disabled="true"></el-checkbox>
+      </el-form-item>
+      <el-form-item label="Has ordered a ticket">
+        <el-checkbox v-model="person.hasorderedticket" :disabled="true"></el-checkbox>
+      </el-form-item>
+      <el-form-item label="Last updated">
+        <el-date-picker v-model="person.modifdate" :disabled="true" style="width: 100%;"></el-date-picker>
+      </el-form-item>
+      <el-form-item label="Account created">
+        <el-date-picker v-model="person.createdate" :disabled="true" style="width: 100%;"></el-date-picker>
+      </el-form-item>
+      <el-form-item v-if="person.teamname" label="Team name">
+        <el-input  v-model="person.teamname" :disabled="true"></el-input>
       </el-form-item>
     </el-form>
     <el-button
@@ -28,7 +46,7 @@
 <script lang="ts">
 import { person } from "../models/Person";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { firebaseService } from "@/services/firebaseservice";
+import { backendService } from "../services/backendservice"
 
 @Component
 export default class Profile extends Vue {
@@ -40,20 +58,19 @@ export default class Profile extends Vue {
   }
 
   updatePersonalDetails(): void {
-    firebaseService.updateRegistratie(this.person);
   }
   
   getData() {
-    firebaseService.getPersonalDetails().then(value => {
-      this.person = value;
+    backendService.getPersonalDetails().then((response) =>{
+      this.person = response;
     });
   }
   get zijnGegevensValid() {
     let isValid: boolean = true;
 
     if (
-      this.person.firstName.length > 0 &&
-      this.person.lastName.length > 0 &&
+      this.person.firstname.length > 0 &&
+      this.person.lastname.length > 0 &&
       this.person.email.length > 0
     ) {
       isValid = true;

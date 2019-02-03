@@ -26,12 +26,11 @@
 </template>
 
 <script lang="ts">
-import { firebaseService } from "./services/firebaseservice";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class RegistratieForm extends Vue {
-  isLoggedin: boolean = false;
+  isLoggedin: boolean = true;
 
   constructor() {
     super();
@@ -39,14 +38,9 @@ export default class RegistratieForm extends Vue {
   }
 
   checkLogin(): void {
-    firebaseService.isLoggedIn().then(value => {
-      this.isLoggedin = value;
-    });
   }
 
   logout(): void {
-    firebaseService.logout();
-    this.isLoggedin = false;
   }
 
   //Werkend voorbeeld van een watch (doe ook: import { Component, Prop, Vue, Watch } from "vue-property-decorator";)

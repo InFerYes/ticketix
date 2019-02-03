@@ -17,9 +17,8 @@
 </template>
 
 <script lang="ts">
-import { team } from "@/models/Team";
+import { team } from "../models/Team";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { firebaseService } from "@/services/firebaseservice";
 
 @Component
 export default class TeamView extends Vue {
@@ -31,17 +30,11 @@ export default class TeamView extends Vue {
   }
 
   updateTeam() {
-    let t = new team();
-    t.name = "test";
-    t.leader = firebaseService.currentUid;
-    t.members.push(firebaseService.currentUid);
-    firebaseService.saveTeam(t);
+
   }
 
   getTeam(){
-    firebaseService.getTeamDetails().then(value => {
-      this.team = value;
-    });
+
   }
 }
 </script>
