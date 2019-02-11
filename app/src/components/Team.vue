@@ -19,6 +19,7 @@
 <script lang="ts">
 import { team } from "../models/Team";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { backendService } from '@/services/backendservice';
 
 @Component
 export default class TeamView extends Vue {
@@ -30,11 +31,13 @@ export default class TeamView extends Vue {
   }
 
   updateTeam() {
-
+    backendService.updateTeam(this.team);
   }
 
   getTeam(){
-
+    backendService.getTeam().then((response) => {
+      this.team = response;
+    });
   }
 }
 </script>

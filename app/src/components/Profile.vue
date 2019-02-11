@@ -61,7 +61,7 @@ export default class Profile extends Vue {
   }
   
   getData() {
-    backendService.getPersonalDetails().then((response) =>{
+    backendService.getPersonalDetails().then((response) => {
       this.person = response;
     });
   }

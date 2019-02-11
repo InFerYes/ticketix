@@ -2,9 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import ElementUI from 'element-ui';
+import cors from 'cors';
 
 Vue.use(ElementUI);
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+cors({
+  origin:['http://192.168.10.115'],
+  methods:['POST'],
+  credentials: true // enable set cookie
+});
 
 let app = '';
 

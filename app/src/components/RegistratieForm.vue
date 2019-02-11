@@ -6,7 +6,7 @@
         <el-input v-model="person.firstname"></el-input>
       </el-form-item>
       <el-form-item label="Last name">
-        <el-input v-model="person.lastNnme"></el-input>
+        <el-input v-model="person.lastname"></el-input>
       </el-form-item>
       <el-form-item label="Nickname">
         <el-input v-model="person.nickname"></el-input>
@@ -37,7 +37,8 @@ export default class RegistratieForm extends Vue {
       this.person.email.length > 0
     ) {
       isValid = true;
-    } else {
+    } 
+    else {
       isValid = false;
     }
 

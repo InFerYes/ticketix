@@ -32,18 +32,24 @@
         </el-form>
       </el-col>
     </el-row>
-    <el-button style="margin-top: 12px;" type="info" @click="back" plain>previous</el-button>
+    <el-button 
+      style="margin-top: 12px;" 
+      type="info" 
+      @click="back" 
+      plain>previous</el-button>
     <el-button
       style="margin-top: 12px;"
       type="primary"
-      @click="bevestig"
-    >Looks right, continue with my registration!</el-button>
+      @click="bevestig" 
+      :disabled="!zijnGegevensValid">Looks right, continue with my registration!</el-button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { person } from "../models/Person";
+import { backendService } from '@/services/backendservice';
+
 @Component
 export default class RegistratieActivatie extends Vue {
   password: string = "";
@@ -57,11 +63,25 @@ export default class RegistratieActivatie extends Vue {
     } else if (this.password.length < 10) {
       alert("Sorry, too short! Use at least 10 characters.");
     } else {
-      
+      backendService.signup(this.person, this.password);
     }
   }
   back() {
     this.$emit("stapBevestiging", this.person, false);
+  }
+  get zijnGegevensValid() {
+    let isValid: boolean = true;
+
+    if (
+      this.password.length > 9
+    ) {
+      isValid = true;
+    } 
+    else {
+      isValid = false;
+    }
+
+    return isValid;
   }
 }
 </script>

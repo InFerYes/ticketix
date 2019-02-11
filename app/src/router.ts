@@ -45,12 +45,12 @@ const router = new Router({
       component: Profile//,
       //meta: { requiresAuth: true }
     },
-    {
-      path: '/verifyemail',
-      name: 'verifyemail',
-      component: VerifyEmail
+    // {
+    //   path: '/verifyemail',
+    //   name: 'verifyemail',
+    //   component: VerifyEmail
 
-    }
+    // }
   ]
 
 });
