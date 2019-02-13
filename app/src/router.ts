@@ -5,7 +5,7 @@ import Registratie from './components/Registratie.vue'
 import TeamView from './components/Team.vue'
 import Login from './components/Login.vue'
 import Profile from './components/Profile.vue'
-import VerifyEmail from './components/VerifyEmail.vue'
+import { backendService } from './services/backendservice';
 Vue.use(Router)
 
 const router = new Router({
@@ -31,8 +31,8 @@ const router = new Router({
     {
       path: '/teamview',
       name: 'teamview',
-      component: TeamView//,
-      //meta: { requiresAuth: true }
+      component: TeamView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
@@ -42,26 +42,18 @@ const router = new Router({
     {
       path: '/profile',
       name: 'profile',
-      component: Profile//,
-      //meta: { requiresAuth: true }
-    },
-    // {
-    //   path: '/verifyemail',
-    //   name: 'verifyemail',
-    //   component: VerifyEmail
-
-    // }
+      component: Profile,
+      meta: { requiresAuth: true }
+    }
   ]
-
 });
 
-// router.beforeEach((to, from, next) => {
-//   // const currentUser = firebase.auth().currentUser;
-//   // const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-//   // if (requiresAuth && !currentUser) next('login');
-//   // else if (!requiresAuth && currentUser) next("home");
-//   // else next();
-// });
+  if (requiresAuth && !backendService.loggedin) next('login');
+  else if (!requiresAuth && backendService.loggedin) next("profile");
+  else next();
+});
 
 export default router;

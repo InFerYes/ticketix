@@ -23,6 +23,7 @@
       </ul>
     </div>
     <el-button type="text" @click="logout">Log out</el-button>
+    <el-button type="text" @click="checkLogin">wat</el-button>
     <router-view/>
   </div>
 </template>
@@ -34,29 +35,32 @@ import { backendService } from '@/services/backendservice';
 
 @Component
 export default class RegistratieForm extends Vue {
-  isLoggedin: boolean = false;
+  isLoggedIn: boolean = false;
 
   constructor() {
     super();
     this.checkLogin();
+    this.checkLogin2();
   }
 
-  checkLogin(): void {}
+  checkLogin(){
+    this.isLoggedIn = backendService.loggedin;
+  }
+
+  checkLogin2(){
+        backendService.isLoggedIn().then((value) => {
+            this.isLoggedIn = value;
+        })
+    }
 
   logout(): void {
     backendService.logout();
   }
 
   //Werkend voorbeeld van een watch (doe ook: import { Component, Prop, Vue, Watch } from "vue-property-decorator";)
-  @Watch("backendService.messages")
-  onPropertyChanged(value: message[], oldValue: message[]) {
-    value.forEach(msg => {
-      this.$notify({
-        title: msg.title,
-        message: msg.message,
-        type: "error"
-      });
-    });
+  @Watch("backendService.loggedin")
+  onPropertyChanged(value: boolean, oldValue: boolean) {
+    this.isLoggedIn = value;
   }
 }
 </script>

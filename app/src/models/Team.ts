@@ -5,4 +5,5 @@ export class team{
     public createdate:Date=new Date;
     public modifdate=new Date;
     public idpersonleader:number=0;
+    public members:person[] =<person[]>[];
 }

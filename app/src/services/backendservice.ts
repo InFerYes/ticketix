@@ -10,9 +10,12 @@ import { registration } from '../models/Registration';
 
 export class BackendService {
     private host: string = "http://192.168.10.115";
+    public loggedin: boolean= false;
 
     constructor() {
-        
+        this.isLoggedIn().then((response) => {
+            this.loggedin = response;
+        })
     }
     // saveRegistratie(person: person) {
 
@@ -29,7 +32,7 @@ export class BackendService {
                 console.log(localStorage.getItem("sess"));
                 axios.defaults.withCredentials = true;
                 Router.replace('profile');
-                
+                this.loggedin = true;
             },
             (err) => {
                 alert('Oops. ' + err.message);
@@ -42,6 +45,7 @@ export class BackendService {
             () => {
                 axios.defaults.withCredentials = false;
                 Router.replace('login');
+                this.loggedin = false;
             },
             (err) => {
                 alert('Oops. ' + err.message);
@@ -97,6 +101,12 @@ export class BackendService {
 
     getTeam(): Promise<team> {
         return axios.get(this.host + "/api/team/read_one.php").then((response) => {
+            return response.data;
+        });
+    }
+
+    getTeamMembers() {
+        return axios.get(this.host + "/api/person/getteammembers.php").then((response) => {
             return response.data;
         });
     }

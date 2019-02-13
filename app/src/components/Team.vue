@@ -6,7 +6,12 @@
       <el-form-item label="Team name">
         <el-input v-model="team.name"></el-input>
       </el-form-item>
-    </el-form>
+  </el-form>
+  <ul id="members">
+    <li v-for="member in team.members" :key="member.Id">
+      {{ member.nickname }}
+    </li>
+  </ul>
   <el-button
       style="margin-top: 12px;"
       type="primary"
@@ -37,6 +42,10 @@ export default class TeamView extends Vue {
   getTeam(){
     backendService.getTeam().then((response) => {
       this.team = response;
+      backendService.getTeamMembers().then((members) => {
+        this.$set(this.team, 'members', members);
+        console.log(this.team.members);
+      })
     });
   }
 }
