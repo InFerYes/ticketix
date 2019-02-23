@@ -1,6 +1,7 @@
 import { person } from '@/models/Person';
 import Router from '@/router';
 import { team } from '@/models/Team';
+//import { teaminvitation } from '@/models/TeamInvitation';
 import axios from 'axios';
 import { account } from "../models/Account";
 // import { messageService } from './messageService';
@@ -106,7 +107,7 @@ export class BackendService {
     }
 
     getTeamMembers() {
-        return axios.get(this.host + "/api/person/getteammembers.php").then((response) => {
+        return axios.get(this.host + "/api/person/get_teammembers.php").then((response) => {
             return response.data;
         });
     }
@@ -118,6 +119,24 @@ export class BackendService {
             },
             (err) => {
                 alert('Oops. ' + err.message);
+        });
+    }
+
+    getTeamInvitations(){
+        return axios.get(this.host + "/api/team/get_invitations.php").then((response) => {
+            return response.data;
+        });
+    }
+
+    declineTeamInvitation(idteam:number){
+        return axios.get(this.host + "/api/team/decline_invitation.php?idteam=" + idteam.toString()).then((response) => {
+            return response.data;
+        });
+    }
+
+    acceptTeamInvitation(idteam:number) {
+        return axios.get(this.host + "/api/team/accept_invitation.php?idteam=" + idteam.toString()).then((response) => {
+            return response.data;
         });
     }
 
