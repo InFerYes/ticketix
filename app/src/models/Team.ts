@@ -9,4 +9,6 @@ export class team{
     public members:person[] =<person[]>[];
     public isinvitationopen: boolean = false;
     public ismember: boolean = false;
+    public invitationemail: string = "";
+    public idmember: number = 0;
 }

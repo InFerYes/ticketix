@@ -18,14 +18,6 @@ export class BackendService {
             this.loggedin = response;
         })
     }
-    // saveRegistratie(person: person) {
-
-    //     Router.replace('profile')
-    // }
-
-    // updateRegistratie(person: person) {
-
-    // }
 
     login(acc: account) {
         axios.post(this.host + "/api/account/login.php", JSON.stringify(acc)).then(
@@ -86,14 +78,6 @@ export class BackendService {
                 });
     }
 
-    // get currentUid(): string {
-    //     return "";
-    // }
-
-    // get currentUser(): person {
-    //     return this.user;
-    // }
-
     getPersonalDetails(): Promise<person> {
         return axios.get(this.host + "/api/person/read_one.php").then((response) => {
             return response.data;
@@ -140,18 +124,14 @@ export class BackendService {
         });
     }
 
-    // getPersonalDetails2(): Promise<any> {
+    sendTeamInvitation(team: team) {
+        axios.post(this.host + "/api/team/send_invitation.php", JSON.stringify(team));
+    }
 
-    // }
-
-    // getTeamDetails(): Promise<team> {
-
-    // }
-
-    // getPersonByUid(uid: string): Promise<person> {
-
-    // }
-
-
+    removeTeamMember(idteam:number, idmember: number){
+        return axios.get(this.host + "/api/team/remove_teammember.php?idteam=" + idteam.toString() + "&idmember=" + idmember.toString()).then((response) => {
+            return response.data;
+        });
+    }
 }
 export const backendService = new BackendService();

@@ -9,13 +9,13 @@
                             <el-input v-model="team.name" :disabled="!leader"></el-input>
                         </el-form-item>
                         <el-form-item v-if="leader" label="Invite new member">
-                            <el-input placeholder="Email address" v-model="email"></el-input>
+                            <el-input placeholder="Email address" v-model="team.invitationemail"></el-input>
                         </el-form-item>
                         <el-form-item label="Members" v-if="invites.length>0">
                             <ul id="members">
                                 <li v-for="member in team.members" :key="member.Id">
                                     <el-tooltip class="item" effect="dark" content="Remove" placement="top">
-                                        <i class="el-icon-close" v-if="leader"></i>
+                                        <i class="el-icon-close" v-if="leader" v-on:click="removeTeamMember(member.id)"></i>
                                     </el-tooltip>
                                     &nbsp;{{ member.nickname }}
                                 </li>
@@ -25,8 +25,14 @@
                     <el-button
                             style="margin-top: 12px;"
                             type="primary"
-                            @click="updateTeam">
+                            @click="updateTeam()">
                                 save
+                    </el-button>
+                    <el-button
+                            style="margin-top: 12px;"
+                            type="primary"
+                            @click="sendInvitation()">
+                                send invitation
                     </el-button>
             </el-col>
             <el-col :span="12">
@@ -92,6 +98,12 @@ export default class TeamView extends Vue {
         });
     }
 
+    removeTeamMember(idmember:number){
+        backendService.removeTeamMember(this.team.id, idmember).then(() => {
+            this.setView();
+        })
+    }
+
     getInvitations(){
         this.invites = <teaminvitation[]>[];
         backendService.getTeamInvitations().then((response) => {
@@ -107,6 +119,10 @@ export default class TeamView extends Vue {
                 this.$set(this.team, 'members', members);
             })
         });
+    }
+
+    sendInvitation(email:string){
+        backendService.sendTeamInvitation(this.team);
     }
 
     declineTeamInvitation(idteam:number){
