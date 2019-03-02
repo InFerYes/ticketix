@@ -33,7 +33,6 @@ export class BackendService {
     }
 
     logout() {
-        // axios.defaults.headers.post['PHPSESSID'] =  ;
         axios.post(this.host + "/api/account/logout.php").then(
             () => {
                 axios.defaults.withCredentials = false;
@@ -80,6 +79,12 @@ export class BackendService {
 
     getPersonalDetails(): Promise<person> {
         return axios.get(this.host + "/api/person/read_one.php").then((response) => {
+            return response.data;
+        });
+    }
+
+    updatePersonalDetails(person: person): Promise<person> {
+        return axios.post(this.host + "/api/person/update.php", JSON.stringify(person)).then((response) => {
             return response.data;
         });
     }

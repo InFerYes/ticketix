@@ -58,6 +58,9 @@ export default class Profile extends Vue {
   }
 
   updatePersonalDetails(): void {
+    backendService.updatePersonalDetails(this.person).then((response) => {
+      this.person = response;
+    });
   }
   
   getData() {
